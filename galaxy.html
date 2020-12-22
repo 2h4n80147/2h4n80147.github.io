@@ -1,0 +1,141 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no">
+<script src="../components/web-animations-js/web-animations.min.js"></script>
+<style>
+  body {
+    background-color: black;
+    overflow: hidden;
+  }
+
+  .star0 {
+    height: 1px;
+    width: 1px;
+    opacity: 1;
+    position: absolute;
+  }
+
+  .star1 {
+    height: 2px;
+    width: 2px;
+    border-radius: 50%;
+    opacity: 1;
+    position: absolute;
+  }
+
+  .star2 {
+    height: 3px;
+    width: 3px;
+    border-radius: 50%;
+    opacity: 1;
+    position: absolute;
+  }
+
+  .star3 {
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    opacity: 1;
+    position: absolute;
+  }
+  .star4{
+
+    border-radius: 50%;
+    opacity: 1;
+    position: absolute;
+  }
+
+  #box {
+    background: #363ca1;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.25);
+    width: 25vw;
+    height: 25vw;
+    min-width: 160px;
+    min-height: 160px;
+    will-change: transform;
+    cursor: pointer;
+    left:50%;
+    top:50%;
+  }
+  #mainText  {
+    color: white;
+    background: black;
+    width: 20px;
+    height: 20px;
+    will-change: transform;
+    cursor: pointer;
+    left: 200px;
+    top: 200px;
+    font-size: 30px;
+  }
+
+</style>
+
+<div id="universe">
+
+</div>
+
+
+<!-- <div id="stage">
+  <div id="mainText">
+    <h1> Hello</h1>
+  </div>
+</div> -->
+
+<script>
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  function moveText() {
+        var optionSelected = "zoomIn"
+        var elem = document.querySelector('#stage');
+        var iterations = 1;
+        window[optionSelected](elem, iterations);
+      }
+   function zoomIn(elem, iterations) {
+      var keyframes = [{transform: 'scale3d(.3, .3, .3)  ', opacity: '0', offset: 0}, 
+        {transform: 'none', opacity: '1', offset: 1}];
+      var timing = {duration: 900, iterations: iterations};
+      return elem.animate(keyframes, timing);        
+    }
+  //window.setInterval(moveText,1000);
+
+  var emojiface = ['( ͡° ͜ʖ ͡°)', '¯\_(ツ)_/¯', '(▀̿Ĺ̯▀̿ ̿)', '(͡ ͡° ͜ つ ͡͡°)','ʕ•ᴥ•ʔ','ಠ_ಠ'];
+
+  //universe.appendChild(document.createElement)
+  var layerCount = 4;
+  var starCount = 500;
+  var maxTime = 31;
+  var universe = document.getElementById('universe');
+  var w = window;
+  var d = document;
+  var e = d.documentElement;
+  var g = d.getElementsByTagName('body')[0];
+  var width = w.innerWidth || e.clientWidth || g.clientWidth;
+  var height = w.innerHeight|| e.clientHeight|| g.clientHeight;
+  for (var i = 0; i < starCount; ++i) {
+    var ypos = Math.round(Math.random() * height);
+    var star = document.createElement('div');
+    var speed = 1000 * (Math.random() * maxTime + 1);
+    star.setAttribute('class', 'star' + (3 - Math.floor((speed / 1000) / 8)));
+    star.style.backgroundColor = 'white';//rgb(' + Math.round(Math.random() * 255) + ', ' + Math.round(Math.random() * 255) + ', ' + Math.round(Math.random() * 255) + ')';
+    //if (i % 50 == 0) {
+      star.setAttribute('class','star'+4);
+      star.style="color:"+getRandomColor(); 
+      star.innerHTML += emojiface[Math.round(Math.random()*emojiface.length)];
+      
+     
+
+    universe.appendChild(star);
+
+    star.animate([{transform: 'translate3d(' + width + 'px, ' + ypos + 'px, 0)'},
+                  {transform: 'translate3d(-' + Math.random() * 256 + 'px, ' + ypos + 'px, 0)'}],
+                 {delay: Math.random() * -speed, duration: speed, iterations:1000 });
+  }
+</script>
